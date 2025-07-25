@@ -1,24 +1,26 @@
-#!/usr/bin/env python3
-from ev3dev2.motor import LargeMotor, OUTPUT_B
-from time import sleep
-from sys import stderr
+from vex import FORWARD, REVERSE, SECONDS, Motor, Ports, VelocityUnits, wait
 
-large_motor = LargeMotor(OUTPUT_B)
+motor = Motor(Ports.PORT1)
 
-print('Starting!')
-large_motor.on_for_seconds(speed=20, seconds=5)
+print("Starting!")
+motor.spin(FORWARD, 20, VelocityUnits.PERCENT)
+wait(5, SECONDS)
 
-print('Ramping up!')
-large_motor.on_for_seconds(speed=100, seconds=5)
+print("Ramping Up!")
+motor.spin(FORWARD, 100, VelocityUnits.PERCENT)
+wait(5, SECONDS)
 
-print('Resting')
-sleep(5)
+print("Resting")
+motor.stop()
+wait(5, SECONDS)
 
-print('Reversing!')
-large_motor.on_for_seconds(speed=-100, seconds=5)
+print("Reversing!")
+motor.spin(REVERSE, 100, VelocityUnits.PERCENT)
+wait(5, SECONDS)
 
-print('Ramping down!')
-large_motor.on_for_seconds(speed=-20, seconds=5)
+print("Ramping Down!")
+motor.spin(REVERSE, 20, VelocityUnits.PERCENT)
+wait(5, SECONDS)
 
-print('Done!')
-print('I mean I am really done!', file=stderr)
+motor.stop()
+print("Done!")
